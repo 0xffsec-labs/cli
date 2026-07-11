@@ -3,7 +3,7 @@
 This repository publishes macOS binaries for Remote Codex. The source code and
 release automation are maintained in a separate private repository.
 
-Install the latest stable release:
+After the first stable release is published, install it with:
 
 ```sh
 curl -fsSL https://app.remotecode.cc/install | bash

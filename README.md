@@ -6,7 +6,7 @@ release automation are maintained in a separate private repository.
 After the first stable release is published, install it with:
 
 ```sh
-curl -fsSL https://app.remotecode.cc/install | bash
+curl -fsSL https://raw.githubusercontent.com/0xffsec-labs/cli/main/install.sh | bash
 ```
 
 Each release includes Apple Silicon and Intel packages plus a SHA-256 checksum

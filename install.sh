@@ -443,8 +443,11 @@ case "$(uname -s)" in
   Darwin)
     os="darwin"
     ;;
+  Linux)
+    os="linux"
+    ;;
   *)
-    echo "install.sh currently supports macOS only." >&2
+    echo "Unsupported operating system: $(uname -s)" >&2
     exit 1
     ;;
 esac
@@ -468,13 +471,24 @@ if [ "$os" = "darwin" ] && [ "$arch" = "x86_64" ]; then
   fi
 fi
 
-if [ "$arch" = "aarch64" ]; then
-  vendor_target="aarch64-apple-darwin"
-  platform_label="macOS (Apple Silicon)"
-else
-  echo "RemoteCodex build is not ready for macOS (Intel) yet." >&2
-  exit 1
-fi
+case "$os:$arch" in
+  darwin:aarch64)
+    vendor_target="aarch64-apple-darwin"
+    platform_label="macOS (Apple Silicon)"
+    ;;
+  darwin:x86_64)
+    echo "RemoteCodex build is not ready for macOS (Intel) yet." >&2
+    exit 1
+    ;;
+  linux:x86_64)
+    vendor_target="x86_64-unknown-linux-musl"
+    platform_label="Linux (x86_64)"
+    ;;
+  linux:aarch64)
+    echo "RemoteCodex build is not ready for Linux (ARM64) yet." >&2
+    exit 1
+    ;;
+esac
 
 tmp_dir="$(mktemp -d)"
 cleanup() {
